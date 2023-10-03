@@ -1,0 +1,104 @@
+1.Mostrar columnas categóricos y numéricos:
+# Load dataset
+import pandas as pd
+df = pd.read_csv('dataset.csv')
+
+# Show categorical columns
+cat_cols = df.select_dtypes(include=['object']).columns.tolist()
+print('Categorical columns:', cat_cols)
+
+# Show numerical columns
+num_cols = df.select_dtypes(include=['int64', 'float64']).columns.tolist()
+print('Numerical columns:', num_cols)
+
+2.Eliminar nulos completos (por fila):
+# Drop rows with missing values
+df.dropna(axis=0, how='all', inplace=True)
+
+
+3.Eliminar nulos completos (por columna):
+# Drop columns with missing values
+df.dropna(axis=1, how='all', inplace=True)
+
+4.Elegir una columna que tiene faltantes imputar con promedio:
+# Impute missing values with mean
+mean = df['column_name'].mean()
+df['column_name'].fillna(mean, inplace=True)
+
+5.Elegir una columna que tiene faltantes, imputar con máximo:
+# Impute missing values with maximum
+max_value = df['column_name'].max()
+df['column_name'].fillna(max_value, inplace=True)
+
+6.Elegir una columna que tiene faltantes, imputar con mínimo:
+# Impute missing values with minimum
+min_value = df['column_name'].min()
+df['column_name'].fillna(min_value, inplace=True)
+
+7.Elegir una columna categórica que tiene faltantes, imputar con moda:
+# Impute missing values with mode
+mode = df['column_name'].mode()[0]
+df['column_name'].fillna(mode, inplace=True)
+
+8.Eliminar columnas bajo una condición:
+# Drop columns where more than 50% of values are missing
+threshold = len(df) * 0.5
+df.dropna(thresh=threshold, axis=1, inplace=True)
+
+9.Eliminar filas bajo una condición:
+# Drop rows where any value is missing
+df.dropna(axis=0, how='any', inplace=True)
+
+
+10.Modificar datos bajo condición de valores:
+# Replace values in a column
+df.loc[df['column_name'] == 'old_value', 'column_name'] = 'new_value'
+
+
+11.Cambiar tipo de dato (atributo):
+# Change data type of a column
+df['column_name'] = df['column_name'].astype('new_data_type')
+
+12.La columna categórica textual, transformar categórico numérico:
+# Convert categorical column to numerical using label encoding
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+df['column_name'] = le.fit_transform(df['column_name'])
+
+
+13.Usar algunas técnicas de transformaciones, explicar en comentario cual modelo matemático de transformación está usando:
+# Apply log transformation to a numerical column
+import numpy as np
+df['column_name'] = np.log(df['column_name'])
+# This is using the natural logarithm function to transform the data, which is a mathematical transformation commonly used to normalize data with a skewed distribution.
+
+
+PREG. 2: GRAFICOS
+# Load preprocessed dataset
+import pandas as pd
+df = pd.read_csv('preprocessed_dataset.csv')
+
+# Import visualization libraries
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Example 1: Histogram of a numerical column
+sns.histplot(df['numerical_column'])
+plt.show()
+
+# Example 2: Boxplot of a numerical column by a categorical column
+sns.boxplot(x='categorical_column', y='numerical_column', data=df)
+plt.show()
+
+# Example 3: Scatter plot of two numerical columns
+sns.scatterplot(x='numerical_column_1', y='numerical_column_2', data=df)
+plt.show()
+
+# Example 4: Bar chart of a categorical column
+sns.countplot(x='categorical_column', data=df)
+plt.show()
+
+# Example 5: Heatmap of correlation matrix
+sns.heatmap(df.corr(), annot=True)
+plt.show()
+
